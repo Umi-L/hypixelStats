@@ -27,7 +27,6 @@ if existingFile == "":
         skywarsStatsToTrack = input("BedwarsStats (seperate with ','): ").split(",")
         duelsStatsToTrack = input("BedwarsStats (seperate with ','): ").split(",")
         mmStatsToTrack = input("MurderMystery (seperate with ','): ").split(",")
-        statsToTrack = statsToTrack.split(",")
 
     for i in range(len(playersToTrack)):
         uuidResponse = requests.get("https://api.mojang.com/users/profiles/minecraft/" + playersToTrack[i - 1])
@@ -41,6 +40,7 @@ if existingFile == "":
             "bedwarsStatsToTrack":bedwarsStatsToTrack,
             "skywarsStatsToTrack": skywarsStatsToTrack,
             "duelsStatsToTrack": duelsStatsToTrack,
+            "mmStatsToTrack": mmStatsToTrack,
             "highestValue":0
         }
         json.dump(data, open(file, "w"))
@@ -55,7 +55,10 @@ else:
 
         uuids = temp["uuids"]
 
-        statsToTrack = temp["statsToTrack"]
+        bedwarsStatsToTrack = temp["bedwarsStatsToTrack"]
+        skywarsStatsToTrack = temp["skywarsStatsToTrack"]
+        duelsStatsToTrack = temp["duelsStatsToTrack"]
+        mmStatsToTrack = temp["mmStatsToTrack"]
 
         i = temp["highestValue"]
 
