@@ -4,7 +4,7 @@ import json
 
 key = "77a6dfc6-609e-484b-bbc1-e5480e8083b6"
 
-delayTime = 10
+delayTime = 180
 
 uuids = []
 
@@ -20,7 +20,7 @@ if existingFile == "":
         bedwarsStatsToTrack = ["final_kills_bedwars", "final_deaths_bedwars", "beds_lost_bedwars", "beds_broken_bedwars", "games_played_bedwars", "wins_bedwars", "losses_bedwars", "kills_bedwars", "deaths_bedwars"]
         skywarsStatsToTrack = ["kills", "deaths", "wins", "losses", "assists"]
         duelsStatsToTrack = ["kills", "deaths", "sumo_duel_wins", "sumo_duel_losses", "bridge_duel_wins", "bridge_duel_losses", "classic_duel_wins", "classic_duel_losses", "op_duel_wins", "op_duel_losses", "sw_duel_wins", "sw_duel_losses"]
-        mmStatsToTrack = ["wins", "losses", "games"]
+        mmStatsToTrack = ["wins", "deaths", "games"]
     else:
         print("--Coustom Stats--")
         bedwarsStatsToTrack = input("BedwarsStats (seperate with ','): ").split(",")
@@ -86,24 +86,40 @@ while True:
 
 
         for j in range(len(bedwarsStatsToTrack)):
-            currentStat = bedwarsStatsToTrack[j-1]
+            try:
+                currentStat = bedwarsStatsToTrack[j-1]
 
-            graphData[i][uuids[y-1]][currentStat] = bedwarsResponseJson[bedwarsStatsToTrack[j]]
+                graphData[i][uuids[y-1]][currentStat] = bedwarsResponseJson[bedwarsStatsToTrack[j]]
+            except KeyError:
+                print("user has no: " + currentStat)
+                graphData[i][uuids[y - 1]][currentStat] = 0
 
         for j in range(len(skywarsStatsToTrack)):
-            currentStat = skywarsStatsToTrack[j]
+            try:
+                currentStat = skywarsStatsToTrack[j]
 
-            graphData[i][uuids[y-1]][currentStat] = skywarsResponseJson[skywarsStatsToTrack[j]]
+                graphData[i][uuids[y-1]][currentStat] = skywarsResponseJson[skywarsStatsToTrack[j]]
+            except KeyError:
+                print("user has no: " + currentStat)
+                graphData[i][uuids[y - 1]][currentStat] = 0
 
         for j in range(len(duelsStatsToTrack)):
-            currentStat = duelsStatsToTrack[j]
+            try:
+                currentStat = duelsStatsToTrack[j]
 
-            graphData[i][uuids[y-1]][currentStat] = duelsResponseJson[duelsStatsToTrack[j]]
+                graphData[i][uuids[y-1]][currentStat] = duelsResponseJson[duelsStatsToTrack[j]]
+            except KeyError:
+                print("user has no: " + currentStat)
+                graphData[i][uuids[y - 1]][currentStat] = 0
 
         for j in range(len(mmStatsToTrack)):
-            currentStat = mmStatsToTrack[j]
+            try:
+                currentStat = mmStatsToTrack[j]
 
-            graphData[i][uuids[y-1]][currentStat] = mmResponseJson[mmStatsToTrack[j]]
+                graphData[i][uuids[y-1]][currentStat] = mmResponseJson[mmStatsToTrack[j]]
+            except KeyError:
+                print("user has no: " + currentStat)
+                graphData[i][uuids[y - 1]][currentStat] = 0
 
 
     with open(file, "r+") as k:
